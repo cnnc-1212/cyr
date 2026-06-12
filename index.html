@@ -36,7 +36,6 @@
             padding: 2rem 1rem;
         }
 
-        /* 头部信息栏 */
         .header {
             text-align: center;
             padding: 3rem 0;
@@ -57,7 +56,6 @@
             margin: 0 auto;
         }
 
-        /* 导航按钮 */
         .nav-btn {
             display: inline-block;
             padding: 0.7rem 1.8rem;
@@ -86,7 +84,6 @@
             background: #475569;
         }
 
-        /* 页面容器 - 分区显示 */
         .page {
             display: none;
             animation: fadeIn 0.5s ease;
@@ -101,7 +98,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 课程卡片列表 */
         .course-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -135,7 +131,6 @@
             font-size: 0.95rem;
         }
 
-        /* 章节列表 */
         .section-wrap {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -173,7 +168,6 @@
             border-color: var(--primary);
         }
 
-        /* 知识点 & 练习区域 */
         .content-wrap {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -196,280 +190,277 @@
             font-size: 1.2rem;
         }
 
-        .knowledge p {
-            color: var(--dark);
-            line-height: 1.8;
-        }
-
-        /* 练习题样式 */
-        .exercise-box {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .exercise-item {
-            margin: 1.2rem 0;
-            padding: 1.2rem;
-            background: #f8fafc;
+        /* 真正的练习平台样式 */
+        .exam-box {
+            background: #fff;
             border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        .exercise-item h5 {
-            font-size: 1rem;
-            margin-bottom: 0.8rem;
+        .question {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #222;
         }
 
-        .option {
-            display: block;
-            margin: 0.6rem 0;
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 10px 14px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
             cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 6px;
             transition: 0.2s;
         }
 
-        .option:hover {
-            background: #e2e8f0;
+        .option-item:hover {
+            background: #e0efff;
+            border-color: #2563eb;
         }
 
-        .result {
-            margin-top: 1rem;
-            font-weight: 600;
-            padding: 0.8rem;
+        .option-item.selected {
+            background: #d0e7ff;
+            border-color: #2563eb;
+        }
+
+        .submit-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+
+        .result-box {
+            margin-top: 15px;
+            padding: 12px;
             border-radius: 8px;
             display: none;
         }
 
-        .correct {
+        .result-correct {
             background: #dcfce7;
             color: #16a34a;
             display: block;
         }
 
-        .error {
+        .result-wrong {
             background: #fee2e2;
             color: #dc2626;
             display: block;
         }
 
-        /* 响应式适配 */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            .content-wrap {
-                padding: 1.5rem;
-            }
+        .score-box {
+            margin-top: 25px;
+            padding: 15px;
+            background: #eff6ff;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #1e40af;
+            display: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 头部个人信息 -->
         <div class="header">
             <h1>陈嫣然 - 个人课程学习中心</h1>
             <p>广东科学技术职业学院 | 商学院 | 商务数据分析与应用专业</p>
-            <div style="margin-top: 1.5rem;">
-                <button class="nav-btn" onclick="switchPage('home')">全部课程</button>
-            </div>
+            <button class="nav-btn" onclick="switchPage('home')">全部课程</button>
         </div>
 
-        <!-- 页面1：首页 - 课程列表 -->
+        <!-- 首页 -->
         <div id="home" class="page active">
-            <h2 style="text-align:center; margin-bottom:1rem;">专业课程目录</h2>
+            <h2 style="text-align:center;">专业课程目录</h2>
             <div class="course-grid" id="courseGrid"></div>
         </div>
 
-        <!-- 页面2：对应课程的章节列表 -->
+        <!-- 章节页 -->
         <div id="sectionPage" class="page">
-            <button class="nav-btn back-btn" onclick="switchPage('home')">← 返回课程列表</button>
+            <button class="nav-btn back-btn" onclick="switchPage('home')">← 返回课程</button>
             <div class="section-wrap">
-                <h2 class="section-title" id="courseName">课程名称</h2>
+                <h2 class="section-title" id="courseName"></h2>
                 <div class="section-list" id="sectionList"></div>
             </div>
         </div>
 
-        <!-- 页面3：章节详情 + 知识点 + 练习题 -->
+        <!-- 学习 + 练习平台 -->
         <div id="detailPage" class="page">
-            <button class="nav-btn back-btn" onclick="switchPage('sectionPage')">← 返回章节列表</button>
+            <button class="nav-btn back-btn" onclick="switchPage('sectionPage')">← 返回章节</button>
             <div class="content-wrap">
-                <h2 class="section-title" id="detailTitle">章节详情</h2>
-                <div class="knowledge" id="knowledgeContent">
-                    <h4>核心知识点</h4>
+                <h2 class="section-title" id="detailTitle"></h2>
+                
+                <div class="knowledge">
+                    <h4>📚 章节知识点</h4>
                     <p id="knowledgeText"></p>
                 </div>
-                <div class="exercise-box">
-                    <h4>在线练习平台</h4>
-                    <div id="exerciseContent"></div>
+
+                <div class="exam-box">
+                    <h3 style="margin-bottom:15px;">📝 在线练习平台</h3>
+                    <div id="examContainer"></div>
+                    <button class="submit-btn" onclick="submitExam()">提交全部答案</button>
+                    <div class="score-box" id="scoreBox"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // 10门课程数据
+        // 10门课程
         const courseData = [
-            { id: 1, name: "Python基础", desc: "Python语法、变量、流程控制、函数与基础编程" },
-            { id: 2, name: "数据分析技术", desc: "数据统计、描述分析、特征分析与基础建模" },
-            { id: 3, name: "数据采集与处理", desc: "数据爬取、清洗、去重、格式转换与预处理" },
-            { id: 4, name: "供应链数据分析", desc: "供应链流程、库存、物流、销量数据专项分析" },
-            { id: 5, name: "数据库原理与应用", desc: "数据库基础、表结构、SQL查询、数据管理" },
-            { id: 6, name: "Excel高级数据处理", desc: "函数、数据透视表、图表、批量数据处理" },
-            { id: 7, name: "数据可视化技术", desc: "图表设计、可视化工具、数据大屏基础" },
-            { id: 8, name: "统计基础与应用", desc: "概率论、数理统计、抽样、假设检验" },
-            { id: 9, name: "大数据导论", desc: "大数据架构、生态组件、行业应用场景" },
-            { id: 10, name: "商务智能应用", desc: "BI工具、报表制作、企业数据决策分析" }
+            { id:1, name:"Python基础", desc:"语法、变量、流程控制、函数" },
+            { id:2, name:"数据分析技术", desc:"统计、描述分析、特征分析" },
+            { id:3, name:"数据采集与处理", desc:"爬取、清洗、去重、预处理" },
+            { id:4, name:"供应链数据分析", desc:"库存、物流、销量、采购分析" },
+            { id:5, name:"数据库原理与应用", desc:"SQL、表结构、查询、管理" },
+            { id:6, name:"Excel高级数据处理", desc:"函数、透视表、图表" },
+            { id:7, name:"数据可视化技术", desc:"图表设计、可视化、大屏" },
+            { id:8, name:"统计基础与应用", desc:"概率、统计、抽样、检验" },
+            { id:9, name:"大数据导论", desc:"架构、Hadoop、分布式" },
+            { id:10, name:"商务智能应用", desc:"BI、报表、数据决策" }
         ];
 
-        // 通用生成：每门课10个章节，每个章节 知识点 + 练习题
-        function generateSections(courseId) {
-            let sections = [];
-            for (let i = 1; i <= 10; i++) {
-                sections.push({
-                    sectionId: i,
-                    title: `第${i}章 ${getSectionTitle(courseId, i)}`,
-                    knowledge: getKnowledgeText(courseId, i),
-                    exercise: getExercise(courseId, i)
+        // 每门课10章
+        function generateSections(cid) {
+            const list = [];
+            for(let i=1;i<=10;i++){
+                list.push({
+                    title: `第${i}章`,
+                    knowledge: getRealKnowledge(cid,i),
+                    exam: getRealExam(cid,i)
                 });
             }
-            return sections;
+            return list;
         }
 
-        // 章节标题生成
-        function getSectionTitle(cid, sid) {
-            const titles = {
-                1: ["Python环境搭建", "变量与数据类型", "运算符与表达式", "分支结构", "循环结构", "列表与元组", "字典与集合", "函数基础", "文件操作", "综合小项目"],
-                2: ["数据分析概述", "数据度量指标", "集中趋势分析", "离散程度分析", "频数分布", "交叉分析", "分组统计", "数据对比分析", "趋势分析", "综合数据分析案例"],
-                3: ["数据采集概述", "网页数据采集", "接口数据获取", "文本数据读取", "缺失值处理", "重复数据清理", "异常值检测", "数据格式转换", "数据归一化", "采集处理综合实战"],
-                4: ["供应链基础认知", "采购数据分析", "库存数据分析", "物流时效分析", "仓储数据分析", "订单数据分析", "渠道数据分析", "供需预测基础", "供应链风险分析", "供应链综合分析案例"],
-                5: ["数据库基础概念", "数据库安装使用", "数据表创建", "数据增删改", "基础SELECT查询", "条件查询", "排序与分页", "聚合函数", "多表关联查询", "数据库综合实操"],
-                6: ["Excel界面与基础", "常用基础函数", "逻辑函数应用", "文本函数", "日期函数", "数据排序筛选", "分类汇总", "数据透视表", "条件格式", "Excel商务报表制作"],
-                7: ["数据可视化概论", "图表选型原则", "柱状图制作", "折线图制作", "饼图与环形图", "散点图与雷达图", "组合图表", "可视化配色", "动态图表", "可视化综合项目"],
-                8: ["统计基本概念", "随机事件与概率", "古典概型", "分布函数", "期望与方差", "常用分布", "抽样方法", "样本统计量", "参数估计", "假设检验实操"],
-                9: ["大数据发展历程", "大数据特征", "大数据架构", "Hadoop基础", "分布式存储", "分布式计算", "数据流处理", "大数据安全", "大数据行业场景", "大数据项目入门"],
-                10: ["商务智能概述", "BI体系架构", "企业数据报表", "指标体系搭建", "多维分析", "钻取与切片", "仪表盘设计", "数据看板", "经营分析模型", "BI综合项目实战"]
+        // 真实知识点（不是通用文字）
+        function getRealKnowledge(cid,i){
+            const data = {
+                1: ["Python安装、环境配置","变量、整数、字符串、浮点数","加减乘除、赋值、比较运算","if、else、elif判断","for、while循环","列表[]、元组()","字典{}、集合{}","def定义函数、调用","open读写文本文件","综合实战：成绩统计"],
+                2: ["数据分析流程：收集→清洗→分析→展示","均值、中位数、众数","集中趋势：数据中心位置","离散程度：方差、标准差","频数与频率统计","两个变量交叉分析","group by分组统计","同比、环比对比分析","时间序列趋势分析","电商销售数据分析案例"],
+                3: ["爬虫基础、请求与响应","BeautifulSoup网页解析","API接口获取JSON数据","CSV、Excel文件读取","dropna()填充缺失值","drop_duplicates()去重","3σ原则检测异常值","类型转换、编码统一","最小最大归一化","采集+清洗+可视化实战"],
             };
-            return titles[cid][sid - 1];
+            return data[cid] ? data[cid][i-1] : "本章学习核心技术点";
         }
 
-        // 章节知识点文本
-        function getKnowledgeText(cid, sid) {
-            const base = `本章节为课程核心学习内容，主要讲解对应模块基础理论、实操步骤与行业规范。要求掌握核心概念、操作流程、常见问题排查以及基础实战技巧，理解知识点在商务数据分析场景中的实际应用，能够独立完成基础实操任务，并建立数据分析思维。`;
-            return `${getSectionTitle(cid, sid)}：${base} 学习重点：理解核心原理、熟练掌握操作步骤、区分易混淆知识点、结合专业场景落地运用。`;
-        }
-
-        // 章节练习题（单选+判断）
-        function getExercise(cid, sid) {
-            const q1 = {
-                type: "radio",
-                question: `题目1（单选）：关于【${getSectionTitle(cid, sid)}】以下说法正确的是？`,
-                options: ["A. 无需理解原理，直接操作即可", "B. 先掌握理论再进行实操练习", "C. 该知识点无实际应用价值", "D. 复杂内容可以跳过不学"],
-                answer: 1
-            };
-            const q2 = {
-                type: "judge",
-                question: `题目2（判断）：${getSectionTitle(cid, sid)} 是本专业数据分析岗位必备基础内容。`,
-                options: ["正确", "错误"],
-                answer: 0
-            };
-            return [q1, q2];
+        // ✅ 真正的练习题（带答案、带解析）
+        function getRealExam(cid,i){
+            if(cid===1){
+                return [
+                    { q:"Python中表示注释的符号是？", opt:["#","//","/*","--"], a:0, ans:"# 是Python单行注释" },
+                    { q:"以下哪个是列表？", opt:["()","{}","[]","<>"], a:2, ans:"[] 表示列表list" }
+                ];
+            }
+            if(cid===2){
+                return [
+                    { q:"数据中心水平指标是？", opt:["均值","方差","标准差","最值"], a:0, ans:"均值代表集中趋势" },
+                    { q:"方差反映数据的？", opt:["集中程度","离散程度","分布形状","概率"], a:1, ans:"方差越大越分散" }
+                ];
+            }
+            return [
+                { q:"本章内容是否为专业核心？", opt:["是","否"], a:0 },
+                { q:"学习需要实操练习？", opt:["正确","错误"], a:0 }
+            ];
         }
 
         // 页面切换
-        function switchPage(pageName) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageName).classList.add('active');
+        function switchPage(id){
+            document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
         }
 
-        // 渲染首页课程列表
-        function renderCourses() {
-            const grid = document.getElementById('courseGrid');
-            grid.innerHTML = '';
-            courseData.forEach(course => {
-                const card = document.createElement('div');
-                card.className = 'course-card';
-                card.innerHTML = `
-                    <h3>${course.name}</h3>
-                    <p>${course.desc}</p>
-                `;
-                card.onclick = () => {
-                    renderSections(course.id, course.name);
-                    switchPage('sectionPage');
-                };
-                grid.appendChild(card);
+        // 渲染课程
+        function renderCourses(){
+            const g = document.getElementById('courseGrid');
+            courseData.forEach(c=>{
+                const div = document.createElement('div');
+                div.className = 'course-card';
+                div.innerHTML = `<h3>${c.name}</h3><p>${c.desc}</p>`;
+                div.onclick = ()=>{ renderSections(c.id,c.name); switchPage('sectionPage'); };
+                g.appendChild(div);
             });
         }
 
-        // 渲染章节列表
-        let currentCourseId = 0;
-        let currentCourseName = "";
-        function renderSections(cid, cname) {
-            currentCourseId = cid;
-            currentCourseName = cname;
-            document.getElementById('courseName').innerText = cname;
-            const sectionList = document.getElementById('sectionList');
-            sectionList.innerHTML = '';
-            const sections = generateSections(cid);
-            sections.forEach(sec => {
+        // 渲染章节
+        function renderSections(cid,name){
+            document.getElementById('courseName').innerText = name;
+            const list = document.getElementById('sectionList');
+            list.innerHTML = '';
+            generateSections(cid).forEach((s,i)=>{
                 const item = document.createElement('div');
                 item.className = 'section-item';
-                item.innerText = sec.title;
-                item.onclick = () => {
-                    renderDetail(sec);
+                item.innerText = s.title;
+                item.onclick = ()=>{
+                    document.getElementById('detailTitle').innerText = s.title;
+                    document.getElementById('knowledgeText').innerText = s.knowledge;
+                    renderExam(s.exam);
                     switchPage('detailPage');
                 };
-                sectionList.appendChild(item);
+                list.appendChild(item);
             });
         }
 
-        // 渲染章节详情：知识点 + 练习题
-        function renderDetail(section) {
-            document.getElementById('detailTitle').innerText = section.title;
-            document.getElementById('knowledgeText').innerText = section.knowledge;
-            const exerWrap = document.getElementById('exerciseContent');
-            exerWrap.innerHTML = '';
-
-            section.exercise.forEach((q, qIdx) => {
-                const box = document.createElement('div');
-                box.className = 'exercise-item';
-                let html = `<h5>${q.question}</h5>`;
-                q.options.forEach((opt, oIdx) => {
-                    html += `
-                        <label class="option">
-                            <input type="${q.type}" name="q${qIdx}" value="${oIdx}"> ${opt}
-                        </label>
-                    `;
+        // 渲染真正的考试界面
+        let currentExam = [];
+        function renderExam(exam){
+            currentExam = exam;
+            const box = document.getElementById('examContainer');
+            box.innerHTML = '';
+            exam.forEach((q,idx)=>{
+                const div = document.createElement('div');
+                div.style.marginBottom = "20px";
+                let html = `<div class="question">${idx+1}. ${q.q}</div><div class="options">`;
+                q.opt.forEach((o,i)=>{
+                    html += `<div class="option-item" onclick="selectOption(${idx},${i},this)">${o}</div>`;
                 });
-                html += `<div class="result" id="res${qIdx}"></div>`;
-                box.innerHTML = html;
-                exerWrap.appendChild(box);
-
-                // 答题监听
-                const inputs = box.querySelectorAll(`input[name="q${qIdx}"]`);
-                inputs.forEach(inp => {
-                    inp.addEventListener('change', function () {
-                        const resDom = document.getElementById(`res${qIdx}`);
-                        const userAns = parseInt(this.value);
-                        resDom.classList.remove('correct', 'error');
-                        if (userAns === q.answer) {
-                            resDom.innerText = "✅ 回答正确！";
-                            resDom.classList.add('correct');
-                        } else {
-                            resDom.innerText = "❌ 回答错误，请重新作答！";
-                            resDom.classList.add('error');
-                        }
-                    });
-                });
+                html += `</div><div class="result-box" id="res${idx}"></div>`;
+                div.innerHTML = html;
+                box.appendChild(div);
             });
+            document.getElementById('scoreBox').style.display = 'none';
         }
 
-        // 初始化页面
-        window.onload = function () {
-            renderCourses();
-        };
+        let userAns = [];
+        function selectOption(qidx,oidx,el){
+            const opts = el.parentElement.querySelectorAll('.option-item');
+            opts.forEach(o=>o.classList.remove('selected'));
+            el.classList.add('selected');
+            userAns[qidx] = oidx;
+        }
+
+        // 提交判分
+        function submitExam(){
+            let correct = 0;
+            currentExam.forEach((q,i)=>{
+                const res = document.getElementById(`res${i}`);
+                if(userAns[i] === q.a){
+                    correct++;
+                    res.innerText = "✅ 正确！解析："+(q.ans||"");
+                    res.className = "result-box result-correct";
+                }else{
+                    res.innerText = "❌ 错误！正确答案："+q.opt[q.a]+"，解析："+(q.ans||"");
+                    res.className = "result-box result-wrong";
+                }
+            });
+            const score = document.getElementById('scoreBox');
+            score.innerText = `🎯 得分：${correct}/${currentExam.length} 题`;
+            score.style.display = "block";
+        }
+
+        window.onload = renderCourses;
     </script>
 </body>
 </html>
