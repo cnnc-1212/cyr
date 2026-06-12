@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>陈嫣然 - 个人课程学习主页 | 广东科学技术职业学院</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", "Microsoft Yahei", sans-serif;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light: #f8fafc;
+            --card-bg: #ffffff;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* 头部信息栏 */
+        .header {
+            text-align: center;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.4rem;
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* 导航按钮 */
+        .nav-btn {
+            display: inline-block;
+            padding: 0.7rem 1.8rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+        }
+
+        .back-btn {
+            background: #64748b;
+        }
+
+        .back-btn:hover {
+            background: #475569;
+        }
+
+        /* 页面容器 - 分区显示 */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 课程卡片列表 */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin-top: 2rem;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.8rem;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .course-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .course-card h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.6rem;
+        }
+
+        .course-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* 章节列表 */
+        .section-wrap {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-top: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .section-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .section-item {
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .section-item:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        /* 知识点 & 练习区域 */
+        .content-wrap {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            margin-top: 1rem;
+        }
+
+        .knowledge {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: #f0f7ff;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .knowledge h4 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .knowledge p {
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        /* 练习题样式 */
+        .exercise-box {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .exercise-item {
+            margin: 1.2rem 0;
+            padding: 1.2rem;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+
+        .exercise-item h5 {
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .option {
+            display: block;
+            margin: 0.6rem 0;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            background: #e2e8f0;
+        }
+
+        .result {
+            margin-top: 1rem;
+            font-weight: 600;
+            padding: 0.8rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .correct {
+            background: #dcfce7;
+            color: #16a34a;
+            display: block;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #dc2626;
+            display: block;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .content-wrap {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部个人信息 -->
+        <div class="header">
+            <h1>陈嫣然 - 个人课程学习中心</h1>
+            <p>广东科学技术职业学院 | 商学院 | 商务数据分析与应用专业</p>
+            <div style="margin-top: 1.5rem;">
+                <button class="nav-btn" onclick="switchPage('home')">全部课程</button>
+            </div>
+        </div>
+
+        <!-- 页面1：首页 - 课程列表 -->
+        <div id="home" class="page active">
+            <h2 style="text-align:center; margin-bottom:1rem;">专业课程目录</h2>
+            <div class="course-grid" id="courseGrid"></div>
+        </div>
+
+        <!-- 页面2：对应课程的章节列表 -->
+        <div id="sectionPage" class="page">
+            <button class="nav-btn back-btn" onclick="switchPage('home')">← 返回课程列表</button>
+            <div class="section-wrap">
+                <h2 class="section-title" id="courseName">课程名称</h2>
+                <div class="section-list" id="sectionList"></div>
+            </div>
+        </div>
+
+        <!-- 页面3：章节详情 + 知识点 + 练习题 -->
+        <div id="detailPage" class="page">
+            <button class="nav-btn back-btn" onclick="switchPage('sectionPage')">← 返回章节列表</button>
+            <div class="content-wrap">
+                <h2 class="section-title" id="detailTitle">章节详情</h2>
+                <div class="knowledge" id="knowledgeContent">
+                    <h4>核心知识点</h4>
+                    <p id="knowledgeText"></p>
+                </div>
+                <div class="exercise-box">
+                    <h4>在线练习平台</h4>
+                    <div id="exerciseContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 10门课程数据
+        const courseData = [
+            { id: 1, name: "Python基础", desc: "Python语法、变量、流程控制、函数与基础编程" },
+            { id: 2, name: "数据分析技术", desc: "数据统计、描述分析、特征分析与基础建模" },
+            { id: 3, name: "数据采集与处理", desc: "数据爬取、清洗、去重、格式转换与预处理" },
+            { id: 4, name: "供应链数据分析", desc: "供应链流程、库存、物流、销量数据专项分析" },
+            { id: 5, name: "数据库原理与应用", desc: "数据库基础、表结构、SQL查询、数据管理" },
+            { id: 6, name: "Excel高级数据处理", desc: "函数、数据透视表、图表、批量数据处理" },
+            { id: 7, name: "数据可视化技术", desc: "图表设计、可视化工具、数据大屏基础" },
+            { id: 8, name: "统计基础与应用", desc: "概率论、数理统计、抽样、假设检验" },
+            { id: 9, name: "大数据导论", desc: "大数据架构、生态组件、行业应用场景" },
+            { id: 10, name: "商务智能应用", desc: "BI工具、报表制作、企业数据决策分析" }
+        ];
+
+        // 通用生成：每门课10个章节，每个章节 知识点 + 练习题
+        function generateSections(courseId) {
+            let sections = [];
+            for (let i = 1; i <= 10; i++) {
+                sections.push({
+                    sectionId: i,
+                    title: `第${i}章 ${getSectionTitle(courseId, i)}`,
+                    knowledge: getKnowledgeText(courseId, i),
+                    exercise: getExercise(courseId, i)
+                });
+            }
+            return sections;
+        }
+
+        // 章节标题生成
+        function getSectionTitle(cid, sid) {
+            const titles = {
+                1: ["Python环境搭建", "变量与数据类型", "运算符与表达式", "分支结构", "循环结构", "列表与元组", "字典与集合", "函数基础", "文件操作", "综合小项目"],
+                2: ["数据分析概述", "数据度量指标", "集中趋势分析", "离散程度分析", "频数分布", "交叉分析", "分组统计", "数据对比分析", "趋势分析", "综合数据分析案例"],
+                3: ["数据采集概述", "网页数据采集", "接口数据获取", "文本数据读取", "缺失值处理", "重复数据清理", "异常值检测", "数据格式转换", "数据归一化", "采集处理综合实战"],
+                4: ["供应链基础认知", "采购数据分析", "库存数据分析", "物流时效分析", "仓储数据分析", "订单数据分析", "渠道数据分析", "供需预测基础", "供应链风险分析", "供应链综合分析案例"],
+                5: ["数据库基础概念", "数据库安装使用", "数据表创建", "数据增删改", "基础SELECT查询", "条件查询", "排序与分页", "聚合函数", "多表关联查询", "数据库综合实操"],
+                6: ["Excel界面与基础", "常用基础函数", "逻辑函数应用", "文本函数", "日期函数", "数据排序筛选", "分类汇总", "数据透视表", "条件格式", "Excel商务报表制作"],
+                7: ["数据可视化概论", "图表选型原则", "柱状图制作", "折线图制作", "饼图与环形图", "散点图与雷达图", "组合图表", "可视化配色", "动态图表", "可视化综合项目"],
+                8: ["统计基本概念", "随机事件与概率", "古典概型", "分布函数", "期望与方差", "常用分布", "抽样方法", "样本统计量", "参数估计", "假设检验实操"],
+                9: ["大数据发展历程", "大数据特征", "大数据架构", "Hadoop基础", "分布式存储", "分布式计算", "数据流处理", "大数据安全", "大数据行业场景", "大数据项目入门"],
+                10: ["商务智能概述", "BI体系架构", "企业数据报表", "指标体系搭建", "多维分析", "钻取与切片", "仪表盘设计", "数据看板", "经营分析模型", "BI综合项目实战"]
+            };
+            return titles[cid][sid - 1];
+        }
+
+        // 章节知识点文本
+        function getKnowledgeText(cid, sid) {
+            const base = `本章节为课程核心学习内容，主要讲解对应模块基础理论、实操步骤与行业规范。要求掌握核心概念、操作流程、常见问题排查以及基础实战技巧，理解知识点在商务数据分析场景中的实际应用，能够独立完成基础实操任务，并建立数据分析思维。`;
+            return `${getSectionTitle(cid, sid)}：${base} 学习重点：理解核心原理、熟练掌握操作步骤、区分易混淆知识点、结合专业场景落地运用。`;
+        }
+
+        // 章节练习题（单选+判断）
+        function getExercise(cid, sid) {
+            const q1 = {
+                type: "radio",
+                question: `题目1（单选）：关于【${getSectionTitle(cid, sid)}】以下说法正确的是？`,
+                options: ["A. 无需理解原理，直接操作即可", "B. 先掌握理论再进行实操练习", "C. 该知识点无实际应用价值", "D. 复杂内容可以跳过不学"],
+                answer: 1
+            };
+            const q2 = {
+                type: "judge",
+                question: `题目2（判断）：${getSectionTitle(cid, sid)} 是本专业数据分析岗位必备基础内容。`,
+                options: ["正确", "错误"],
+                answer: 0
+            };
+            return [q1, q2];
+        }
+
+        // 页面切换
+        function switchPage(pageName) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageName).classList.add('active');
+        }
+
+        // 渲染首页课程列表
+        function renderCourses() {
+            const grid = document.getElementById('courseGrid');
+            grid.innerHTML = '';
+            courseData.forEach(course => {
+                const card = document.createElement('div');
+                card.className = 'course-card';
+                card.innerHTML = `
+                    <h3>${course.name}</h3>
+                    <p>${course.desc}</p>
+                `;
+                card.onclick = () => {
+                    renderSections(course.id, course.name);
+                    switchPage('sectionPage');
+                };
+                grid.appendChild(card);
+            });
+        }
+
+        // 渲染章节列表
+        let currentCourseId = 0;
+        let currentCourseName = "";
+        function renderSections(cid, cname) {
+            currentCourseId = cid;
+            currentCourseName = cname;
+            document.getElementById('courseName').innerText = cname;
+            const sectionList = document.getElementById('sectionList');
+            sectionList.innerHTML = '';
+            const sections = generateSections(cid);
+            sections.forEach(sec => {
+                const item = document.createElement('div');
+                item.className = 'section-item';
+                item.innerText = sec.title;
+                item.onclick = () => {
+                    renderDetail(sec);
+                    switchPage('detailPage');
+                };
+                sectionList.appendChild(item);
+            });
+        }
+
+        // 渲染章节详情：知识点 + 练习题
+        function renderDetail(section) {
+            document.getElementById('detailTitle').innerText = section.title;
+            document.getElementById('knowledgeText').innerText = section.knowledge;
+            const exerWrap = document.getElementById('exerciseContent');
+            exerWrap.innerHTML = '';
+
+            section.exercise.forEach((q, qIdx) => {
+                const box = document.createElement('div');
+                box.className = 'exercise-item';
+                let html = `<h5>${q.question}</h5>`;
+                q.options.forEach((opt, oIdx) => {
+                    html += `
+                        <label class="option">
+                            <input type="${q.type}" name="q${qIdx}" value="${oIdx}"> ${opt}
+                        </label>
+                    `;
+                });
+                html += `<div class="result" id="res${qIdx}"></div>`;
+                box.innerHTML = html;
+                exerWrap.appendChild(box);
+
+                // 答题监听
+                const inputs = box.querySelectorAll(`input[name="q${qIdx}"]`);
+                inputs.forEach(inp => {
+                    inp.addEventListener('change', function () {
+                        const resDom = document.getElementById(`res${qIdx}`);
+                        const userAns = parseInt(this.value);
+                        resDom.classList.remove('correct', 'error');
+                        if (userAns === q.answer) {
+                            resDom.innerText = "✅ 回答正确！";
+                            resDom.classList.add('correct');
+                        } else {
+                            resDom.innerText = "❌ 回答错误，请重新作答！";
+                            resDom.classList.add('error');
+                        }
+                    });
+                });
+            });
+        }
+
+        // 初始化页面
+        window.onload = function () {
+            renderCourses();
+        };
+    </script>
+</body>
+</html>
