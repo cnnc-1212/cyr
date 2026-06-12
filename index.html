@@ -1,466 +1,1332 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>陈嫣然 - 个人课程学习主页 | 广东科学技术职业学院</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Segoe UI", "Microsoft Yahei", sans-serif;
-        }
-
-        :root {
-            --primary: #2563eb;
-            --primary-light: #3b82f6;
-            --dark: #1e293b;
-            --gray: #64748b;
-            --light: #f8fafc;
-            --card-bg: #ffffff;
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-            --radius: 16px;
-        }
-
-        body {
-            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
-            min-height: 100vh;
-            color: var(--dark);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-
-        .header {
-            text-align: center;
-            padding: 3rem 0;
-            margin-bottom: 2rem;
-        }
-
-        .header h1 {
-            font-size: 2.4rem;
-            color: var(--dark);
-            margin-bottom: 0.8rem;
-            font-weight: 700;
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            color: var(--gray);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .nav-btn {
-            display: inline-block;
-            padding: 0.7rem 1.8rem;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            margin: 0.5rem;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-        }
-
-        .nav-btn:hover {
-            background: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
-        }
-
-        .back-btn {
-            background: #64748b;
-        }
-
-        .back-btn:hover {
-            background: #475569;
-        }
-
-        .page {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .course-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.8rem;
-            margin-top: 2rem;
-        }
-
-        .course-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 1.8rem;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.8);
-        }
-
-        .course-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-        }
-
-        .course-card h3 {
-            font-size: 1.3rem;
-            color: var(--primary);
-            margin-bottom: 0.6rem;
-        }
-
-        .course-card p {
-            color: var(--gray);
-            font-size: 0.95rem;
-        }
-
-        .section-wrap {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            margin-top: 1rem;
-        }
-
-        .section-title {
-            font-size: 1.6rem;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .section-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 1.2rem;
-        }
-
-        .section-item {
-            padding: 1rem;
-            background: #f8fafc;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: 0.2s ease;
-            border: 1px solid #e2e8f0;
-        }
-
-        .section-item:hover {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-        }
-
-        .content-wrap {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 2.5rem;
-            box-shadow: var(--shadow);
-            margin-top: 1rem;
-        }
-
-        .knowledge {
-            margin: 1.5rem 0;
-            padding: 1.5rem;
-            background: #f0f7ff;
-            border-radius: 12px;
-            border-left: 4px solid var(--primary);
-        }
-
-        .knowledge h4 {
-            color: var(--primary);
-            margin-bottom: 0.8rem;
-            font-size: 1.2rem;
-        }
-
-        /* 真正的练习平台样式 */
-        .exam-box {
-            background: #fff;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .question {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            color: #222;
-        }
-
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .option-item {
-            padding: 10px 14px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .option-item:hover {
-            background: #e0efff;
-            border-color: #2563eb;
-        }
-
-        .option-item.selected {
-            background: #d0e7ff;
-            border-color: #2563eb;
-        }
-
-        .submit-btn {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-            margin-top: 10px;
-        }
-
-        .result-box {
-            margin-top: 15px;
-            padding: 12px;
-            border-radius: 8px;
-            display: none;
-        }
-
-        .result-correct {
-            background: #dcfce7;
-            color: #16a34a;
-            display: block;
-        }
-
-        .result-wrong {
-            background: #fee2e2;
-            color: #dc2626;
-            display: block;
-        }
-
-        .score-box {
-            margin-top: 25px;
-            padding: 15px;
-            background: #eff6ff;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #1e40af;
-            display: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>陈嫣然 - 个人学习展示</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root {
+--bg-primary: #0d1117;
+--bg-secondary: #161b22;
+--bg-card: #1c2128;
+--bg-card-hover: #24292f;
+--text-primary: #ffffff;
+--text-secondary: #a0aec0;
+--text-muted: #6b7280;
+--accent-blue: #3498db;
+--accent-cyan: #00d4ff;
+--accent-purple: #9b59b6;
+--accent-green: #2ecc71;
+--accent-orange: #e67e22;
+--border-color: #30363d;
+--gradient-start: #1a1a2e;
+--gradient-end: #16213e;
+--glow-blue: rgba(52, 152, 219, 0.3);
+--glow-cyan: rgba(0, 212, 255, 0.3);
+}
+ 
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+ 
+body {
+font-family: 'Noto Sans SC', sans-serif;
+background: linear-gradient(135deg, var(--bg-primary) 0%, var(--gradient-start) 50%, var(--gradient-end) 100%);
+color: var(--text-primary);
+min-height: 100vh;
+line-height: 1.6;
+}
+ 
+.noise-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+pointer-events: none;
+opacity: 0.03;
+z-index: 1000;
+background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+ 
+.nav {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+height: 70px;
+background: rgba(13, 17, 23, 0.8);
+backdrop-filter: blur(20px);
+border-bottom: 1px solid var(--border-color);
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 60px;
+z-index: 100;
+}
+ 
+.nav-logo {
+font-size: 1.5rem;
+font-weight: 700;
+background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+cursor: pointer;
+}
+ 
+.nav-links {
+display: flex;
+gap: 30px;
+}
+ 
+.nav-link {
+color: var(--text-secondary);
+text-decoration: none;
+font-weight: 500;
+transition: all 0.3s ease;
+position: relative;
+}
+ 
+.nav-link:hover {
+color: var(--accent-cyan);
+}
+ 
+.nav-link::after {
+content: '';
+position: absolute;
+bottom: -5px;
+left: 0;
+width: 0;
+height: 2px;
+background: var(--accent-cyan);
+transition: width 0.3s ease;
+}
+ 
+.nav-link:hover::after {
+width: 100%;
+}
+ 
+.main {
+padding-top: 70px;
+min-height: 100vh;
+}
+ 
+.hero {
+padding: 100px 60px;
+display: flex;
+align-items: center;
+gap: 80px;
+max-width: 1400px;
+margin: 0 auto;
+}
+ 
+.hero-avatar {
+width: 280px;
+height: 280px;
+border-radius: 50%;
+background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+padding: 4px;
+flex-shrink: 0;
+animation: float 6s ease-in-out infinite;
+}
+ 
+.hero-avatar-inner {
+width: 100%;
+height: 100%;
+border-radius: 50%;
+background: var(--bg-secondary);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 6rem;
+color: var(--accent-cyan);
+}
+ 
+@keyframes float {
+0%, 100% { transform: translateY(0px); }
+50% { transform: translateY(-20px); }
+}
+ 
+.hero-content {
+flex: 1;
+}
+ 
+.hero-greeting {
+font-size: 1.1rem;
+color: var(--accent-cyan);
+font-weight: 500;
+margin-bottom: 10px;
+letter-spacing: 2px;
+}
+ 
+.hero-name {
+font-size: 3.5rem;
+font-weight: 700;
+margin-bottom: 20px;
+background: linear-gradient(135deg, var(--text-primary), var(--accent-cyan));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+ 
+.hero-info {
+color: var(--text-secondary);
+font-size: 1.1rem;
+margin-bottom: 30px;
+line-height: 2;
+}
+ 
+.hero-info span {
+color: var(--accent-blue);
+}
+ 
+.hero-tags {
+display: flex;
+flex-wrap: wrap;
+gap: 12px;
+}
+ 
+.hero-tag {
+padding: 8px 20px;
+background: rgba(52, 152, 219, 0.1);
+border: 1px solid rgba(52, 152, 219, 0.3);
+border-radius: 50px;
+font-size: 0.9rem;
+color: var(--accent-blue);
+transition: all 0.3s ease;
+}
+ 
+.hero-tag:hover {
+background: rgba(52, 152, 219, 0.2);
+transform: translateY(-2px);
+box-shadow: 0 5px 20px var(--glow-blue);
+}
+ 
+.section-title {
+padding: 0 60px;
+margin-bottom: 40px;
+}
+ 
+.section-title h2 {
+font-size: 2rem;
+font-weight: 700;
+position: relative;
+display: inline-block;
+}
+ 
+.section-title h2::after {
+content: '';
+position: absolute;
+bottom: -10px;
+left: 0;
+width: 60px;
+height: 4px;
+background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+border-radius: 2px;
+}
+ 
+.course-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+gap: 30px;
+padding: 0 60px 100px;
+max-width: 1400px;
+margin: 0 auto;
+}
+ 
+.course-card {
+background: var(--bg-card);
+border: 1px solid var(--border-color);
+border-radius: 16px;
+padding: 30px;
+cursor: pointer;
+transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+position: relative;
+overflow: hidden;
+}
+ 
+.course-card::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 4px;
+background: linear-gradient(90deg, var(--card-color, var(--accent-blue)), transparent);
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+ 
+.course-card:hover::before {
+opacity: 1;
+}
+ 
+.course-card:hover {
+transform: translateY(-10px);
+border-color: var(--card-color, var(--accent-blue));
+box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px var(--card-glow, var(--glow-blue));
+}
+ 
+.course-card-icon {
+width: 60px;
+height: 60px;
+border-radius: 12px;
+background: linear-gradient(135deg, var(--card-color, var(--accent-blue)), var(--card-color2, var(--accent-purple)));
+display: flex;
+align-items: center;
+justify-content: center;
+margin-bottom: 20px;
+}
+ 
+.course-card-icon i {
+width: 30px;
+height: 30px;
+color: white;
+}
+ 
+.course-card h3 {
+font-size: 1.4rem;
+font-weight: 600;
+margin-bottom: 12px;
+color: var(--text-primary);
+}
+ 
+.course-card p {
+color: var(--text-secondary);
+font-size: 0.95rem;
+margin-bottom: 20px;
+line-height: 1.7;
+}
+ 
+.course-card-meta {
+display: flex;
+justify-content: space-between;
+align-items: center;
+color: var(--text-muted);
+font-size: 0.85rem;
+}
+ 
+.course-card-meta span {
+display: flex;
+align-items: center;
+gap: 6px;
+}
+ 
+.course-detail {
+display: none;
+max-width: 1200px;
+margin: 0 auto;
+padding: 60px;
+}
+ 
+.course-detail.active {
+display: block;
+animation: fadeIn 0.5s ease;
+}
+ 
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+ 
+.back-btn {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+color: var(--accent-cyan);
+text-decoration: none;
+font-weight: 500;
+margin-bottom: 40px;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+ 
+.back-btn:hover {
+transform: translateX(-5px);
+}
+ 
+.course-header {
+display: flex;
+align-items: center;
+gap: 30px;
+margin-bottom: 60px;
+padding-bottom: 40px;
+border-bottom: 1px solid var(--border-color);
+}
+ 
+.course-header-icon {
+width: 100px;
+height: 100px;
+border-radius: 20px;
+background: linear-gradient(135deg, var(--card-color, var(--accent-blue)), var(--card-color2, var(--accent-purple)));
+display: flex;
+align-items: center;
+justify-content: center;
+}
+ 
+.course-header-icon i {
+width: 50px;
+height: 50px;
+color: white;
+}
+ 
+.course-header h1 {
+font-size: 2.5rem;
+font-weight: 700;
+margin-bottom: 10px;
+}
+ 
+.course-header p {
+color: var(--text-secondary);
+font-size: 1.1rem;
+}
+ 
+.chapter-list {
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
+ 
+.chapter-item {
+background: var(--bg-card);
+border: 1px solid var(--border-color);
+border-radius: 12px;
+overflow: hidden;
+transition: all 0.3s ease;
+}
+ 
+.chapter-item:hover {
+border-color: var(--accent-blue);
+}
+ 
+.chapter-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 25px 30px;
+cursor: pointer;
+transition: background 0.3s ease;
+}
+ 
+.chapter-header:hover {
+background: var(--bg-card-hover);
+}
+ 
+.chapter-header-left {
+display: flex;
+align-items: center;
+gap: 20px;
+}
+ 
+.chapter-number {
+width: 45px;
+height: 45px;
+border-radius: 10px;
+background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 700;
+font-size: 1.1rem;
+}
+ 
+.chapter-title {
+font-size: 1.2rem;
+font-weight: 600;
+}
+ 
+.chapter-arrow {
+color: var(--text-muted);
+transition: transform 0.3s ease;
+}
+ 
+.chapter-item.expanded .chapter-arrow {
+transform: rotate(180deg);
+}
+ 
+.chapter-content {
+display: none;
+padding: 0 30px 30px;
+border-top: 1px solid var(--border-color);
+}
+ 
+.chapter-item.expanded .chapter-content {
+display: block;
+animation: slideDown 0.3s ease;
+}
+ 
+@keyframes slideDown {
+from { opacity: 0; max-height: 0; }
+to { opacity: 1; max-height: 2000px; }
+}
+ 
+.knowledge-section {
+margin-top: 30px;
+}
+ 
+.knowledge-section h4 {
+font-size: 1.1rem;
+color: var(--accent-cyan);
+margin-bottom: 20px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+ 
+.knowledge-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+gap: 15px;
+}
+ 
+.knowledge-point {
+background: var(--bg-secondary);
+padding: 15px 20px;
+border-radius: 8px;
+border-left: 3px solid var(--accent-blue);
+font-size: 0.95rem;
+color: var(--text-secondary);
+transition: all 0.3s ease;
+}
+ 
+.knowledge-point:hover {
+background: var(--bg-card-hover);
+transform: translateX(5px);
+color: var(--text-primary);
+}
+ 
+.exercise-section {
+margin-top: 40px;
+background: var(--bg-secondary);
+border-radius: 12px;
+padding: 30px;
+}
+ 
+.exercise-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 30px;
+}
+ 
+.exercise-header h4 {
+font-size: 1.2rem;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+ 
+.start-exercise-btn {
+padding: 12px 30px;
+background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+border: none;
+border-radius: 8px;
+color: white;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+ 
+.start-exercise-btn:hover {
+transform: scale(1.05);
+box-shadow: 0 10px 30px var(--glow-blue);
+}
+ 
+.quiz-section {
+display: none;
+}
+ 
+.quiz-section.active {
+display: block;
+}
+ 
+.quiz-progress {
+display: flex;
+align-items: center;
+gap: 15px;
+margin-bottom: 30px;
+}
+ 
+.quiz-progress-bar {
+flex: 1;
+height: 8px;
+background: var(--bg-card);
+border-radius: 4px;
+overflow: hidden;
+}
+ 
+.quiz-progress-fill {
+height: 100%;
+background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+transition: width 0.3s ease;
+}
+ 
+.quiz-progress-text {
+color: var(--text-secondary);
+font-size: 0.9rem;
+min-width: 60px;
+}
+ 
+.quiz-question {
+background: var(--bg-card);
+border-radius: 12px;
+padding: 30px;
+margin-bottom: 20px;
+}
+ 
+.quiz-question-type {
+display: inline-block;
+padding: 4px 12px;
+background: rgba(52, 152, 219, 0.2);
+color: var(--accent-blue);
+border-radius: 4px;
+font-size: 0.8rem;
+margin-bottom: 15px;
+}
+ 
+.quiz-question-text {
+font-size: 1.2rem;
+font-weight: 500;
+margin-bottom: 25px;
+line-height: 1.8;
+}
+ 
+.quiz-options {
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+ 
+.quiz-option {
+display: flex;
+align-items: center;
+gap: 15px;
+padding: 15px 20px;
+background: var(--bg-secondary);
+border: 2px solid var(--border-color);
+border-radius: 10px;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+ 
+.quiz-option:hover {
+border-color: var(--accent-blue);
+background: var(--bg-card-hover);
+}
+ 
+.quiz-option.selected {
+border-color: var(--accent-cyan);
+background: rgba(0, 212, 255, 0.1);
+}
+ 
+.quiz-option.correct {
+border-color: var(--accent-green);
+background: rgba(46, 204, 113, 0.1);
+}
+ 
+.quiz-option.incorrect {
+border-color: #e74c3c;
+background: rgba(231, 76, 60, 0.1);
+}
+ 
+.quiz-option-marker {
+width: 30px;
+height: 30px;
+border-radius: 50%;
+border: 2px solid var(--border-color);
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 600;
+flex-shrink: 0;
+transition: all 0.3s ease;
+}
+ 
+.quiz-option.selected .quiz-option-marker {
+border-color: var(--accent-cyan);
+background: var(--accent-cyan);
+color: var(--bg-primary);
+}
+ 
+.quiz-option.correct .quiz-option-marker {
+border-color: var(--accent-green);
+background: var(--accent-green);
+color: white;
+}
+ 
+.quiz-option.incorrect .quiz-option-marker {
+border-color: #e74c3c;
+background: #e74c3c;
+color: white;
+}
+ 
+.quiz-input {
+width: 100%;
+padding: 15px 20px;
+background: var(--bg-secondary);
+border: 2px solid var(--border-color);
+border-radius: 10px;
+color: var(--text-primary);
+font-size: 1rem;
+font-family: inherit;
+transition: border-color 0.3s ease;
+}
+ 
+.quiz-input:focus {
+outline: none;
+border-color: var(--accent-blue);
+}
+ 
+.quiz-nav {
+display: flex;
+justify-content: space-between;
+margin-top: 30px;
+}
+ 
+.quiz-nav-btn {
+padding: 12px 30px;
+border: none;
+border-radius: 8px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+ 
+.quiz-prev-btn {
+background: var(--bg-card);
+color: var(--text-secondary);
+border: 1px solid var(--border-color);
+}
+ 
+.quiz-prev-btn:hover {
+background: var(--bg-card-hover);
+}
+ 
+.quiz-next-btn {
+background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+color: white;
+}
+ 
+.quiz-next-btn:hover {
+transform: scale(1.05);
+box-shadow: 0 10px 30px var(--glow-blue);
+}
+ 
+.quiz-submit-btn {
+background: linear-gradient(135deg, var(--accent-green), #27ae60);
+color: white;
+}
+ 
+.quiz-submit-btn:hover {
+transform: scale(1.05);
+box-shadow: 0 10px 30px rgba(46, 204, 113, 0.3);
+}
+ 
+.result-modal {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: rgba(0, 0, 0, 0.8);
+backdrop-filter: blur(10px);
+z-index: 200;
+align-items: center;
+justify-content: center;
+}
+ 
+.result-modal.active {
+display: flex;
+}
+ 
+.result-content {
+background: var(--bg-card);
+border-radius: 20px;
+padding: 50px;
+text-align: center;
+max-width: 500px;
+width: 90%;
+animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+ 
+@keyframes scaleIn {
+from { opacity: 0; transform: scale(0.8); }
+to { opacity: 1; transform: scale(1); }
+}
+ 
+.result-icon {
+width: 100px;
+height: 100px;
+border-radius: 50%;
+margin: 0 auto 30px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 3rem;
+}
+ 
+.result-icon.excellent {
+background: linear-gradient(135deg, var(--accent-green), #27ae60);
+}
+ 
+.result-icon.good {
+background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+}
+ 
+.result-icon.pass {
+background: linear-gradient(135deg, var(--accent-orange), #f39c12);
+}
+ 
+.result-title {
+font-size: 2rem;
+font-weight: 700;
+margin-bottom: 10px;
+}
+ 
+.result-score {
+font-size: 3.5rem;
+font-weight: 700;
+margin: 20px 0;
+}
+ 
+.result-score span {
+font-size: 1.5rem;
+color: var(--text-secondary);
+}
+ 
+.result-detail {
+color: var(--text-secondary);
+margin-bottom: 30px;
+}
+ 
+.result-actions {
+display: flex;
+gap: 15px;
+justify-content: center;
+}
+ 
+.result-btn {
+padding: 12px 30px;
+border: none;
+border-radius: 8px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+ 
+.result-retry-btn {
+background: var(--bg-secondary);
+color: var(--text-primary);
+border: 1px solid var(--border-color);
+}
+ 
+.result-retry-btn:hover {
+background: var(--bg-card-hover);
+}
+ 
+.result-close-btn {
+background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+color: white;
+}
+ 
+.result-close-btn:hover {
+transform: scale(1.05);
+}
+ 
+.home-page {
+display: block;
+}
+ 
+.home-page.hidden {
+display: none;
+}
+ 
+@media (max-width: 1024px) {
+.hero {
+flex-direction: column;
+text-align: center;
+padding: 60px 30px;
+}
+ 
+.hero-avatar {
+width: 200px;
+height: 200px;
+}
+ 
+.hero-avatar-inner {
+font-size: 4rem;
+}
+ 
+.hero-name {
+font-size: 2.5rem;
+}
+ 
+.hero-tags {
+justify-content: center;
+}
+ 
+.course-grid {
+padding: 0 30px 60px;
+}
+ 
+.nav {
+padding: 0 30px;
+}
+ 
+.section-title {
+padding: 0 30px;
+}
+}
+ 
+@media (max-width: 768px) {
+.course-grid {
+grid-template-columns: 1fr;
+}
+ 
+.course-detail {
+padding: 30px;
+}
+ 
+.course-header {
+flex-direction: column;
+text-align: center;
+}
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>陈嫣然 - 个人课程学习中心</h1>
-            <p>广东科学技术职业学院 | 商学院 | 商务数据分析与应用专业</p>
-            <button class="nav-btn" onclick="switchPage('home')">全部课程</button>
-        </div>
-
-        <!-- 首页 -->
-        <div id="home" class="page active">
-            <h2 style="text-align:center;">专业课程目录</h2>
-            <div class="course-grid" id="courseGrid"></div>
-        </div>
-
-        <!-- 章节页 -->
-        <div id="sectionPage" class="page">
-            <button class="nav-btn back-btn" onclick="switchPage('home')">← 返回课程</button>
-            <div class="section-wrap">
-                <h2 class="section-title" id="courseName"></h2>
-                <div class="section-list" id="sectionList"></div>
-            </div>
-        </div>
-
-        <!-- 学习 + 练习平台 -->
-        <div id="detailPage" class="page">
-            <button class="nav-btn back-btn" onclick="switchPage('sectionPage')">← 返回章节</button>
-            <div class="content-wrap">
-                <h2 class="section-title" id="detailTitle"></h2>
-                
-                <div class="knowledge">
-                    <h4>📚 章节知识点</h4>
-                    <p id="knowledgeText"></p>
-                </div>
-
-                <div class="exam-box">
-                    <h3 style="margin-bottom:15px;">📝 在线练习平台</h3>
-                    <div id="examContainer"></div>
-                    <button class="submit-btn" onclick="submitExam()">提交全部答案</button>
-                    <div class="score-box" id="scoreBox"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // 10门课程
-        const courseData = [
-            { id:1, name:"Python基础", desc:"语法、变量、流程控制、函数" },
-            { id:2, name:"数据分析技术", desc:"统计、描述分析、特征分析" },
-            { id:3, name:"数据采集与处理", desc:"爬取、清洗、去重、预处理" },
-            { id:4, name:"供应链数据分析", desc:"库存、物流、销量、采购分析" },
-            { id:5, name:"数据库原理与应用", desc:"SQL、表结构、查询、管理" },
-            { id:6, name:"Excel高级数据处理", desc:"函数、透视表、图表" },
-            { id:7, name:"数据可视化技术", desc:"图表设计、可视化、大屏" },
-            { id:8, name:"统计基础与应用", desc:"概率、统计、抽样、检验" },
-            { id:9, name:"大数据导论", desc:"架构、Hadoop、分布式" },
-            { id:10, name:"商务智能应用", desc:"BI、报表、数据决策" }
-        ];
-
-        // 每门课10章
-        function generateSections(cid) {
-            const list = [];
-            for(let i=1;i<=10;i++){
-                list.push({
-                    title: `第${i}章`,
-                    knowledge: getRealKnowledge(cid,i),
-                    exam: getRealExam(cid,i)
-                });
-            }
-            return list;
-        }
-
-        // 真实知识点（不是通用文字）
-        function getRealKnowledge(cid,i){
-            const data = {
-                1: ["Python安装、环境配置","变量、整数、字符串、浮点数","加减乘除、赋值、比较运算","if、else、elif判断","for、while循环","列表[]、元组()","字典{}、集合{}","def定义函数、调用","open读写文本文件","综合实战：成绩统计"],
-                2: ["数据分析流程：收集→清洗→分析→展示","均值、中位数、众数","集中趋势：数据中心位置","离散程度：方差、标准差","频数与频率统计","两个变量交叉分析","group by分组统计","同比、环比对比分析","时间序列趋势分析","电商销售数据分析案例"],
-                3: ["爬虫基础、请求与响应","BeautifulSoup网页解析","API接口获取JSON数据","CSV、Excel文件读取","dropna()填充缺失值","drop_duplicates()去重","3σ原则检测异常值","类型转换、编码统一","最小最大归一化","采集+清洗+可视化实战"],
-            };
-            return data[cid] ? data[cid][i-1] : "本章学习核心技术点";
-        }
-
-        // ✅ 真正的练习题（带答案、带解析）
-        function getRealExam(cid,i){
-            if(cid===1){
-                return [
-                    { q:"Python中表示注释的符号是？", opt:["#","//","/*","--"], a:0, ans:"# 是Python单行注释" },
-                    { q:"以下哪个是列表？", opt:["()","{}","[]","<>"], a:2, ans:"[] 表示列表list" }
-                ];
-            }
-            if(cid===2){
-                return [
-                    { q:"数据中心水平指标是？", opt:["均值","方差","标准差","最值"], a:0, ans:"均值代表集中趋势" },
-                    { q:"方差反映数据的？", opt:["集中程度","离散程度","分布形状","概率"], a:1, ans:"方差越大越分散" }
-                ];
-            }
-            return [
-                { q:"本章内容是否为专业核心？", opt:["是","否"], a:0 },
-                { q:"学习需要实操练习？", opt:["正确","错误"], a:0 }
-            ];
-        }
-
-        // 页面切换
-        function switchPage(id){
-            document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
-
-        // 渲染课程
-        function renderCourses(){
-            const g = document.getElementById('courseGrid');
-            courseData.forEach(c=>{
-                const div = document.createElement('div');
-                div.className = 'course-card';
-                div.innerHTML = `<h3>${c.name}</h3><p>${c.desc}</p>`;
-                div.onclick = ()=>{ renderSections(c.id,c.name); switchPage('sectionPage'); };
-                g.appendChild(div);
-            });
-        }
-
-        // 渲染章节
-        function renderSections(cid,name){
-            document.getElementById('courseName').innerText = name;
-            const list = document.getElementById('sectionList');
-            list.innerHTML = '';
-            generateSections(cid).forEach((s,i)=>{
-                const item = document.createElement('div');
-                item.className = 'section-item';
-                item.innerText = s.title;
-                item.onclick = ()=>{
-                    document.getElementById('detailTitle').innerText = s.title;
-                    document.getElementById('knowledgeText').innerText = s.knowledge;
-                    renderExam(s.exam);
-                    switchPage('detailPage');
-                };
-                list.appendChild(item);
-            });
-        }
-
-        // 渲染真正的考试界面
-        let currentExam = [];
-        function renderExam(exam){
-            currentExam = exam;
-            const box = document.getElementById('examContainer');
-            box.innerHTML = '';
-            exam.forEach((q,idx)=>{
-                const div = document.createElement('div');
-                div.style.marginBottom = "20px";
-                let html = `<div class="question">${idx+1}. ${q.q}</div><div class="options">`;
-                q.opt.forEach((o,i)=>{
-                    html += `<div class="option-item" onclick="selectOption(${idx},${i},this)">${o}</div>`;
-                });
-                html += `</div><div class="result-box" id="res${idx}"></div>`;
-                div.innerHTML = html;
-                box.appendChild(div);
-            });
-            document.getElementById('scoreBox').style.display = 'none';
-        }
-
-        let userAns = [];
-        function selectOption(qidx,oidx,el){
-            const opts = el.parentElement.querySelectorAll('.option-item');
-            opts.forEach(o=>o.classList.remove('selected'));
-            el.classList.add('selected');
-            userAns[qidx] = oidx;
-        }
-
-        // 提交判分
-        function submitExam(){
-            let correct = 0;
-            currentExam.forEach((q,i)=>{
-                const res = document.getElementById(`res${i}`);
-                if(userAns[i] === q.a){
-                    correct++;
-                    res.innerText = "✅ 正确！解析："+(q.ans||"");
-                    res.className = "result-box result-correct";
-                }else{
-                    res.innerText = "❌ 错误！正确答案："+q.opt[q.a]+"，解析："+(q.ans||"");
-                    res.className = "result-box result-wrong";
-                }
-            });
-            const score = document.getElementById('scoreBox');
-            score.innerText = `🎯 得分：${correct}/${currentExam.length} 题`;
-            score.style.display = "block";
-        }
-
-        window.onload = renderCourses;
-    </script>
+<div class="noise-overlay"></div>
+ 
+<nav class="nav">
+<div class="nav-logo" onclick="navigateTo('home')">陈嫣然</div>
+<div class="nav-links">
+<a class="nav-link" onclick="navigateTo('home')">首页</a>
+<a class="nav-link" href="#home">课程</a>
+<a class="nav-link" href="#home">关于</a>
+</div>
+</nav>
+ 
+<main class="main">
+<div id="home-page" class="home-page">
+<section class="hero">
+<div class="hero-avatar">
+<div class="hero-avatar-inner">
+<i data-lucide="user"></i>
+</div>
+</div>
+<div class="hero-content">
+<p class="hero-greeting">HELLO, WELCOME</p>
+<h1 class="hero-name">陈嫣然</h1>
+<div class="hero-info">
+<p><span>广东科学技术职业学院</span> - 商学院</p>
+<p>商务数据分析与应用专业</p>
+</div>
+<div class="hero-tags">
+<span class="hero-tag">Python</span>
+<span class="hero-tag">数据分析</span>
+<span class="hero-tag">数据可视化</span>
+<span class="hero-tag">数据库</span>
+<span class="hero-tag">机器学习</span>
+</div>
+</div>
+</section>
+ 
+<section>
+<div class="section-title">
+<h2>我的课程</h2>
+</div>
+<div class="course-grid" id="course-grid"></div>
+</section>
+</div>
+ 
+<div id="course-detail" class="course-detail"></div>
+</main>
+ 
+<div id="result-modal" class="result-modal">
+<div class="result-content">
+<div id="result-icon" class="result-icon"></div>
+<h2 id="result-title" class="result-title"></h2>
+<div id="result-score" class="result-score"></div>
+<p id="result-detail" class="result-detail"></p>
+<div class="result-actions">
+<button class="result-btn result-retry-btn" onclick="retryExercise()">重新练习</button>
+<button class="result-btn result-close-btn" onclick="closeResultModal()">关闭</button>
+</div>
+</div>
+</div>
+ 
+<script>
+const courses = [
+{ id: 1, name: 'Python基础', description: '学习Python编程语言的基础语法、数据类型、控制结构和函数等核心概念。', icon: 'code-2', color: '#3498db', color2: '#2980b9' },
+{ id: 2, name: '数据分析技术', description: '掌握数据分析的基本方法、统计理论和数据处理技术。', icon: 'bar-chart-3', color: '#9b59b6', color2: '#8e44ad' },
+{ id: 3, name: '数据采集与处理', description: '学习网络爬虫、数据清洗、转换和存储的技术与实践。', icon: 'database', color: '#2ecc71', color2: '#27ae60' },
+{ id: 4, name: '供应链数据分析', description: '运用数据分析技术优化供应链管理、库存控制和物流配送。', icon: 'truck', color: '#e67e22', color2: '#d35400' },
+{ id: 5, name: '数据库原理与应用', description: '理解关系型数据库设计原理，掌握SQL查询和数据库管理。', icon: 'server', color: '#1abc9c', color2: '#16a085' },
+{ id: 6, name: 'Excel数据处理与分析', description: '利用Excel进行数据整理、公式计算、数据透视表和图表制作。', icon: 'table', color: '#34495e', color2: '#2c3e50' },
+{ id: 7, name: 'Hadoop大数据技术', description: '学习Hadoop生态系统组件，包括HDFS、MapReduce、Hive等。', icon: 'hard-drive', color: '#e74c3c', color2: '#c0392b' },
+{ id: 8, name: '数据可视化', description: '使用可视化工具将数据转化为直观的图表和仪表盘。', icon: 'pie-chart', color: '#00d4ff', color2: '#0099cc' },
+{ id: 9, name: '机器学习基础', description: '入门机器学习算法，包括监督学习、无监督学习和模型评估。', icon: 'brain', color: '#9b59b6', color2: '#7d3c98' },
+{ id: 10, name: '商业数据分析实战', description: '综合运用数据分析技能解决真实商业问题，完成项目实战。', icon: 'briefcase', color: '#f1c40f', color2: '#d4ac0d' }
+];
+ 
+function generateChapters(courseId) {
+const chapterTemplates = {
+1: { title: 'Python概述与环境搭建', knowledgePoints: ['Python语言简介', 'Anaconda发行版安装', 'Jupyter Notebook使用', '第一个Python程序', 'IDE选择与配置'] },
+2: { title: '变量与数据类型', knowledgePoints: ['变量命名规则', '基本数据类型', '类型转换', '常量定义', '变量的内存管理'] },
+3: { title: '运算符与表达式', knowledgePoints: ['算术运算符', '比较运算符', '逻辑运算符', '赋值运算符', '运算符优先级'] },
+4: { title: '条件语句', knowledgePoints: ['if语句基础', 'if-else结构', 'if-elif-else多分支', '嵌套条件', '三元表达式'] },
+5: { title: '循环结构', knowledgePoints: ['for循环', 'while循环', 'break语句', 'continue语句', 'range函数'] },
+6: { title: '字符串操作', knowledgePoints: ['字符串创建', '字符串索引', '字符串切片', '字符串方法', '格式化字符串'] },
+7: { title: '列表与元组', knowledgePoints: ['列表创建与访问', '列表操作', '列表方法', '元组定义', '列表与元组区别'] },
+8: { title: '字典与集合', knowledgePoints: ['字典创建', '字典访问', '字典操作', '集合创建', '集合运算'] },
+9: { title: '函数基础', knowledgePoints: ['函数定义', '参数传递', '返回值', '默认参数', 'lambda函数'] },
+10: { title: '文件操作', knowledgePoints: ['打开文件', '读取文件', '写入文件', '文件关闭', '上下文管理器'] }
+};
+return Object.keys(chapterTemplates).map(id => {
+const base = chapterTemplates[id];
+const exerciseSets = getExerciseSet(courseId, parseInt(id));
+return {
+id: parseInt(id),
+title: base.title,
+knowledgePoints: base.knowledgePoints,
+exercises: exerciseSets
+};
+});
+}
+ 
+function getExerciseSet(courseId, chapterId) {
+const exercises = {
+1: [
+{ type: 'choice', question: 'Python是什么类型的编程语言？', options: ['编译型语言', '解释型语言', '汇编语言', '机器语言'], answer: 1, explanation: 'Python是一种解释型语言，代码不需要编译，直接由Python解释器执行。' },
+{ type: 'boolean', question: 'Python代码必须缩进正确才能正常运行。', options: ['正确', '错误'], answer: 0, explanation: 'Python使用缩进来表示代码块，缩进不正确会导致SyntaxError。' },
+{ type: 'fill', question: '在Python中，print()函数用于输出____信息。', options: [], answer: '输出', explanation: 'print()函数是Python中用于输出的基本函数。' },
+{ type: 'choice', question: '哪个命令可以启动Jupyter Notebook？', options: ['jupyter run', 'jupyter start', 'jupyter notebook', 'python jupyter'], answer: 2, explanation: '在命令行中输入"jupyter notebook"即可启动Jupyter Notebook。' }
+],
+2: [
+{ type: 'choice', question: '下列哪个不是Python合法的变量名？', options: ['my_var', '_private', '2nd_value', 'NoC'], answer: 2, explanation: '变量名不能以数字开头，2nd_value是不合法的。' },
+{ type: 'choice', question: 'type(3.14)返回的类型是？', options: ['int', 'float', 'double', 'real'], answer: 1, explanation: '3.14是浮点数，type()函数会返回float类型。' },
+{ type: 'fill', question: '使用type()____函数可以查看变量的数据类型。', options: [], answer: 'type', explanation: 'type()是Python内置函数，用于检查对象的类型。' },
+{ type: 'boolean', question: 'Python中变量不需要声明类型。', options: ['正确', '错误'], answer: 0, explanation: 'Python是动态类型语言，变量类型在赋值时自动确定。' }
+],
+3: [
+{ type: 'choice', question: '10 // 3 的结果是？', options: ['3.33', '3', '4', '3.0'], answer: 1, explanation: '// 是整除运算符，10整除3等于3。' },
+{ type: 'boolean', question: '== 和 = 是相同的运算符。', options: ['正确', '错误'], answer: 1, explanation: '==是比较相等，=是赋值操作，两者完全不同。' },
+{ type: 'choice', question: '3 < 5 and 10 > 8 的结果是？', options: ['True', 'False', '3', '10'], answer: 0, explanation: 'and运算符两边都为True时结果才为True。' },
+{ type: 'fill', question: '求幂运算符是**。例如2**3等于____。', options: [], answer: '8', explanation: '2**3表示2的3次方，即2×2×2=8。' }
+],
+4: [
+{ type: 'choice', question: 'if语句的判断条件为True时，会执行哪个代码块？', options: ['if之前的块', 'if之后的块', 'else块', '不执行任何块'], answer: 1, explanation: '当if的条件为True时，会执行紧跟在if后面的代码块。' },
+{ type: 'fill', question: '多分支结构使用if、____和else关键字。', options: [], answer: 'elif', explanation: 'elif是else if的缩写，用于检查多个条件。' },
+{ type: 'boolean', question: 'if-elif结构中，最多只会执行一个分支。', options: ['正确', '错误'], answer: 0, explanation: 'if-elif-else结构中，条件从上往下判断，一旦找到True就执行对应块并跳过其余分支。' },
+{ type: 'choice', question: 'Python中elif的正确使用数量是？', options: ['0个', '1个', '多个', '必须是2个'], answer: 2, explanation: 'elif可以根据需要使用任意多个，形成多分支结构。' }
+],
+5: [
+{ type: 'choice', question: 'for i in range(5)循环会执行几次？', options: ['4次', '5次', '6次', '无限次'], answer: 1, explanation: 'range(5)生成0-4的序列，共5个数，所以循环执行5次。' },
+{ type: 'boolean', question: 'break语句可以结束所有循环。', options: ['正确', '错误'], answer: 1, explanation: 'break只结束包含它的最内层循环。' },
+{ type: 'fill', question: '____语句用于跳过当前循环迭代，进入下一次循环。', options: [], answer: 'continue', explanation: 'continue语句跳过循环体中剩余的语句，继续下一次迭代。' },
+{ type: 'choice', question: '哪个函数生成0到10的序列？', options: ['range(0,10)', 'range(0,11)', 'range(10)', 'range(1,10)'], answer: 1, explanation: 'range(0,11)生成0-10的整数序列，包括0和10。' }
+],
+6: [
+{ type: 'choice', question: '字符串"Hello"[1]返回什么？', options: ['H', 'e', 'ello', 'He'], answer: 1, explanation: '字符串索引从0开始，[1]获取第二个字符"e"。' },
+{ type: 'fill', question: '使用____方法可以将字符串转为大写。', options: [], answer: 'upper', explanation: 'upper()是字符串方法，返回全大写的字符串副本。' },
+{ type: 'boolean', question: '字符串是不可变类型，不能修改。', options: ['正确', '错误'], answer: 0, explanation: '字符串创建后不能修改，只能通过方法返回新字符串。' },
+{ type: 'choice', question: '"python".replace("py","PP")的结果是？', options: ['PPthon', 'PPython', 'python', 'PyPPon'], answer: 0, explanation: 'replace()方法将"py"替换为"PP"，结果是"PPthon"。' }
+],
+7: [
+{ type: 'choice', question: '[1,2,3][-1]的值是？', options: ['1', '2', '3', '报错'], answer: 2, explanation: '负数索引从后往前数，-1表示最后一个元素3。' },
+{ type: 'boolean', question: '列表可以包含不同类型的元素。', options: ['正确', '错误'], answer: 0, explanation: 'Python列表可以包含任意类型的对象，包括混合类型。' },
+{ type: 'fill', question: '使用____函数可以将元组转换为列表。', options: [], answer: 'list', explanation: 'list()函数可以将元组或其他可迭代对象转换为列表。' },
+{ type: 'choice', question: '(1,)是什么数据类型？', options: ['整数', '字符串', '元组', '列表'], answer: 2, explanation: '包含一个元素的元组必须加逗号，(1,)是元组。' }
+],
+8: [
+{ type: 'choice', question: '如何访问字典中键"name"的值？', options: ['dict.name', 'dict["name"]', 'dict(name)', 'dict->name'], answer: 1, explanation: '字典使用键作为索引，dict["name"]或dict.get("name")可以访问值。' },
+{ type: 'fill', question: '字典使用key:____作为键值对的数据结构。', options: [], answer: 'value', explanation: '字典的每个元素是键值对，格式为key: value。' },
+{ type: 'boolean', question: '集合中的元素可以重复。', options: ['正确', '错误'], answer: 1, explanation: '集合是无序不重复元素的集会，自动去重。' },
+{ type: 'choice', question: '{1,2,3} & {2,3,4}的结果是？', options: ['{1,2,3,4}', '{2,3}', '{1,4}', '{1,2,3}'], answer: 1, explanation: '&是集合的交集运算符，返回两个集合的共同元素。' }
+],
+9: [
+{ type: 'choice', question: '定义函数使用的关键字是？', options: ['function', 'def', 'func', 'define'], answer: 1, explanation: 'Python使用def关键字来定义函数。' },
+{ type: 'fill', question: '函数使用____语句返回结果。', options: [], answer: 'return', explanation: 'return语句用于从函数返回一个值。' },
+{ type: 'boolean', question: '函数可以没有return语句。', options: ['正确', '错误'], answer: 0, explanation: '函数可以没有return语句，此时返回None。' },
+{ type: 'choice', question: 'lambda函数是什么类型的函数？', options: ['命名函数', '匿名函数', '类方法', '静态方法'], answer: 1, explanation: 'lambda用于创建匿名函数，适合简短的一次性函数。' }
+],
+10: [
+{ type: 'choice', question: '以写入模式打开文件使用的模式是？', options: ['r', 'w', 'a', 'x'], answer: 1, explanation: 'w表示写入模式，会创建新文件或覆盖已有文件。' },
+{ type: 'fill', question: '使用with语句可以自动关闭____文件。', options: [], answer: '关闭', explanation: 'with语句提供上下文管理，会自动关闭文件。' },
+{ type: 'boolean', question: '"r+"模式可以同时读写文件。', options: ['正确', '错误'], answer: 0, explanation: 'r+是读写模式，可以读取和写入文件。' },
+{ type: 'choice', question: 'readline()方法返回什么？', options: ['所有行', '单行', '字符', '字节'], answer: 1, explanation: 'readline()一次读取文件中的一行内容。' }
+]
+};
+const key = (courseId * 10 + chapterId) % 100;
+const baseExercises = exercises[chapterId] || exercises[1];
+return baseExercises;
+}
+ 
+courses.forEach(course => {
+course.chapters = generateChapters(course.id);
+});
+ 
+let currentCourse = null;
+let currentChapter = null;
+let currentQuestion = 0;
+let userAnswers = {};
+let quizActive = false;
+ 
+function init() {
+lucide.createIcons();
+renderCourseGrid();
+handleRoute();
+window.addEventListener('hashchange', handleRoute);
+}
+ 
+function renderCourseGrid() {
+const grid = document.getElementById('course-grid');
+grid.innerHTML = courses.map(course => `
+<div class="course-card" style="--card-color: ${course.color}; --card-color2: ${course.color2}; --card-glow: ${course.color}40;" onclick="navigateToCourse(${course.id})">
+<div class="course-card-icon">
+<i data-lucide="${course.icon}"></i>
+</div>
+<h3>${course.name}</h3>
+<p>${course.description}</p>
+<div class="course-card-meta">
+<span><i data-lucide="book-open" style="width:16px;height:16px"></i> 10章节</span>
+<span><i data-lucide="file-text" style="width:16px;height:16px"></i> 40+练习题</span>
+</div>
+</div>
+`).join('');
+lucide.createIcons();
+}
+ 
+function navigateTo(page) {
+if (page === 'home') {
+window.location.hash = '';
+}
+}
+ 
+function navigateToCourse(courseId) {
+window.location.hash = `course/${courseId}`;
+}
+ 
+function handleRoute() {
+const hash = window.location.hash || '#home';
+const parts = hash.replace('#', '').split('/');
+document.getElementById('home-page').classList.add('hidden');
+document.getElementById('course-detail').classList.remove('active');
+if (parts[0] === 'course' && parts[1]) {
+const courseId = parseInt(parts[1]);
+currentCourse = courses.find(c => c.id === courseId);
+if (currentCourse) {
+renderCourseDetail(currentCourse);
+}
+} else {
+document.getElementById('home-page').classList.remove('hidden');
+}
+}
+ 
+function renderCourseDetail(course) {
+const detail = document.getElementById('course-detail');
+detail.innerHTML = `
+<div class="back-btn" onclick="navigateTo('home')">
+<i data-lucide="arrow-left" style="width:20px;height:20px"></i>
+返回课程列表
+</div>
+<div class="course-header" style="--card-color: ${course.color}; --card-color2: ${course.color2};">
+<div class="course-header-icon">
+<i data-lucide="${course.icon}"></i>
+</div>
+<div>
+<h1>${course.name}</h1>
+<p>${course.description}</p>
+</div>
+</div>
+<div class="chapter-list">
+${course.chapters.map(chapter => `
+<div class="chapter-item" id="chapter-${chapter.id}">
+<div class="chapter-header" onclick="toggleChapter(${chapter.id})">
+<div class="chapter-header-left">
+<div class="chapter-number">${chapter.id}</div>
+<div class="chapter-title">${chapter.title}</div>
+</div>
+<i data-lucide="chevron-down" class="chapter-arrow" style="width:20px;height:20px"></i>
+</div>
+<div class="chapter-content">
+<div class="knowledge-section">
+<h4><i data-lucide="book-marked" style="width:20px;height:20px"></i> 知识点</h4>
+<div class="knowledge-grid">
+${chapter.knowledgePoints.map(kp => `
+<div class="knowledge-point">${kp}</div>
+`).join('')}
+</div>
+</div>
+<div class="exercise-section">
+<div class="exercise-header">
+<h4><i data-lucide="pencil" style="width:20px;height:20px"></i> 章节练习</h4>
+</div>
+<p class="exercise-intro">本章节包含 <span>${chapter.exercises.length}</span> 道练习题，涵盖本章核心知识点。</p>
+<button class="start-exercise-btn" onclick="startExercise(${course.id}, ${chapter.id})">开始练习</button>
+<div class="quiz-section" id="quiz-${course.id}-${chapter.id}"></div>
+</div>
+</div>
+</div>
+`).join('')}
+</div>
+`;
+detail.classList.add('active');
+lucide.createIcons();
+}
+ 
+function toggleChapter(chapterId) {
+const chapterEl = document.getElementById(`chapter-${chapterId}`);
+chapterEl.classList.toggle('expanded');
+}
+ 
+function startExercise(courseId, chapterId) {
+const course = courses.find(c => c.id === courseId);
+const chapter = course.chapters.find(ch => ch.id === chapterId);
+currentCourse = course;
+currentChapter = chapter;
+currentQuestion = 0;
+userAnswers = {};
+quizActive = true;
+const quizSection = document.getElementById(`quiz-${courseId}-${chapterId}`);
+quizSection.classList.add('active');
+renderQuestion();
+}
+ 
+function renderQuestion() {
+const quizSection = document.getElementById(`quiz-${currentCourse.id}-${currentChapter.id}`);
+const question = currentChapter.exercises[currentQuestion];
+const progress = ((currentQuestion + 1) / currentChapter.exercises.length) * 100;
+let optionsHtml = '';
+if (question.type === 'fill') {
+optionsHtml = `<input type="text" class="quiz-input" id="quiz-input" placeholder="请输入答案" value="${userAnswers[currentQuestion] || ''}">`;
+} else {
+const markers = ['A', 'B', 'C', 'D'];
+optionsHtml = question.options.map((opt, idx) => `
+<div class="quiz-option ${userAnswers[currentQuestion] === idx ? 'selected' : ''}" onclick="selectOption(${idx})">
+<div class="quiz-option-marker">${markers[idx]}</div>
+<div class="quiz-option-text">${opt}</div>
+</div>
+`).join('');
+}
+const typeLabel = { choice: '单选题', boolean: '判断题', fill: '填空题' };
+quizSection.innerHTML = `
+<div class="quiz-progress">
+<div class="quiz-progress-bar">
+<div class="quiz-progress-fill" style="width: ${progress}%"></div>
+</div>
+<div class="quiz-progress-text">${currentQuestion + 1}/${currentChapter.exercises.length}</div>
+</div>
+<div class="quiz-question">
+<span class="quiz-question-type">${typeLabel[question.type]}</span>
+<p class="quiz-question-text">${question.question}</p>
+<div class="quiz-options">${optionsHtml}</div>
+</div>
+<div class="quiz-nav">
+${currentQuestion > 0 ? '<button class="quiz-nav-btn quiz-prev-btn" onclick="prevQuestion()">上一题</button>' : '<div></div>'}
+${currentQuestion < currentChapter.exercises.length - 1 ? 
+'<button class="quiz-nav-btn quiz-next-btn" onclick="nextQuestion()">下一题</button>' : 
+'<button class="quiz-nav-btn quiz-submit-btn" onclick="submitQuiz()">提交答案</button>'}
+</div>
+`;
+if (question.type === 'fill') {
+setTimeout(() => {
+document.getElementById('quiz-input').focus();
+}, 100);
+}
+}
+ 
+function selectOption(idx) {
+userAnswers[currentQuestion] = idx;
+renderQuestion();
+}
+ 
+function nextQuestion() {
+if (currentChapter.exercises[currentQuestion].type === 'fill') {
+const input = document.getElementById('quiz-input');
+userAnswers[currentQuestion] = input.value.trim();
+}
+currentQuestion++;
+renderQuestion();
+}
+ 
+function prevQuestion() {
+if (currentChapter.exercises[currentQuestion].type === 'fill') {
+const input = document.getElementById('quiz-input');
+userAnswers[currentQuestion] = input.value.trim();
+}
+currentQuestion--;
+renderQuestion();
+}
+ 
+function submitQuiz() {
+if (currentChapter.exercises[currentQuestion].type === 'fill') {
+const input = document.getElementById('quiz-input');
+userAnswers[currentQuestion] = input.value.trim();
+}
+let correct = 0;
+currentChapter.exercises.forEach((q, idx) => {
+if (q.type === 'fill') {
+if (userAnswers[idx] && userAnswers[idx].toLowerCase().includes(q.answer.toLowerCase())) {
+correct++;
+}
+} else if (userAnswers[idx] === q.answer) {
+correct++;
+}
+});
+const score = Math.round((correct / currentChapter.exercises.length) * 100);
+showResult(score, correct);
+}
+ 
+function showResult(score, correct) {
+const modal = document.getElementById('result-modal');
+const icon = document.getElementById('result-icon');
+const title = document.getElementById('result-title');
+const scoreEl = document.getElementById('result-score');
+const detail = document.getElementById('result-detail');
+icon.className = 'result-icon';
+if (score >= 90) {
+icon.classList.add('excellent');
+icon.innerHTML = '<i data-lucide="trophy" style="width:50px;height:50px;color:white"></i>';
+title.textContent = '优秀!';
+} else if (score >= 70) {
+icon.classList.add('good');
+icon.innerHTML = '<i data-lucide="thumbs-up" style="width:50px;height:50px;color:white"></i>';
+title.textContent = '良好!';
+} else if (score >= 60) {
+icon.classList.add('pass');
+icon.innerHTML = '<i data-lucide="check-circle" style="width:50px;height:50px;color:white"></i>';
+title.textContent = '及格';
+} else {
+icon.classList.add('pass');
+icon.innerHTML = '<i data-lucide="book-open" style="width:50px;height:50px;color:white"></i>';
+title.textContent = '继续努力';
+}
+scoreEl.innerHTML = `${score}<span>%</span>`;
+detail.textContent = `答对 ${correct}/${currentChapter.exercises.length} 题，继续加油！`;
+modal.classList.add('active');
+lucide.createIcons();
+}
+ 
+function closeResultModal() {
+document.getElementById('result-modal').classList.remove('active');
+quizActive = false;
+}
+ 
+function retryExercise() {
+closeResultModal();
+startExercise(currentCourse.id, currentChapter.id);
+}
+ 
+init();
+</script>
 </body>
 </html>
